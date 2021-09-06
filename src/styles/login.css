@@ -1,0 +1,24 @@
+.loginForm{
+    height: fit-content;
+    display: grid;
+    grid-template-rows: 50px repeat(2,3rem) auto 4rem auto; 
+    width: 90%;
+    padding: 10px;
+}
+
+.loginInput{
+    border: 0.5px solid rgb(233, 233, 233);
+}
+
+.loginInput:nth-of-type(1) {
+    border-radius: 7px 7px 0 0 ;
+}
+
+.loginInput:nth-of-type(2) {
+    border-radius: 0 0 7px 7px  ;
+}
+
+.loginInput:focus{
+    outline: none;
+    /* border: rgb(126, 156, 255) 1px solid; */
+}

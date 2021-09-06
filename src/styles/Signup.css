@@ -1,0 +1,46 @@
+.signupForm{
+    display: grid;
+
+    grid-template-rows: 50px 20px 48px 20px 48px 20px 48px 20px 48px auto 3rem auto;
+    width: 90%;
+    height: auto;
+
+    margin: auto;
+    grid-row-gap: 10px  ;
+    /* justify-items: center; */
+}
+
+.centerContainer4max6{
+    height: auto;
+    width: 45%;
+    max-height: 600px; 
+    min-width: 400px;
+    /* max-width: 400px;  */
+    padding: 20px;
+    animation-name: slideLeft;
+    animation-duration: 0.7s;
+    margin-right: 50px;
+}
+
+
+.teaser{
+    width: 100%;
+    height: auto;
+    border-left: 1px solid rgb(216, 216, 216);
+    padding:10px 50px;
+    font-family: 'Helvetica';
+}
+
+@media screen and (max-width: 773px) {
+    .teaser{
+        display: none;
+    }
+
+    .centerContainer4max6{
+        min-width: 300px;
+        width: 95%;
+        margin: auto;
+    }
+
+  
+}
