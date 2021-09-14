@@ -1,4 +1,6 @@
 import axios  from "axios";
+import { Redirect } from "react-router";
+
 //Get value of input text fields
 export const UgetFields = (e,that) => {
     that.setState({
@@ -8,7 +10,7 @@ export const UgetFields = (e,that) => {
 
 }
 
-
+// validate fields
 export const UvalidateFields = (that, from) =>{
     const messages = {
       errorFillFields: "Please fill all fields",
@@ -17,9 +19,28 @@ export const UvalidateFields = (that, from) =>{
       success: "ok"
     };
 
+    // border warnings for input validation
+    const inputValidationWarning = (fields) => {
+        fields.forEach( (field,i) => {
+
+            // remove warning if text field is 
+            // populated
+            if(field.value.length > 0)
+                field.classList.remove('dangerBorder')
+
+            // show warning if text field is empty
+            if(field.value.length === 0){
+                field.classList.add('dangerBorder')
+                
+            }
+        });
+    }
+
     // LOGIN VALIDATION
     if(from === "LOGIN" || from.toLowerCase() === 'login'){
         console.log(from)
+
+        const {emailField,passwordField} = that
 
         // get Fields from LOGIN state
         const {email, password} = that.state 
@@ -31,16 +52,21 @@ export const UvalidateFields = (that, from) =>{
               errors: true,
               errorMessage: messages.errorFillFields,
             });
+
+            inputValidationWarning([emailField.current,passwordField.current])
             return
         }
 
         // return success if theres are no errors
+        inputValidationWarning([emailField.current,passwordField.current])
         that.setState({validationSuccess: messages.success})
         return messages.success
     }
 
     // SIGNUP VALIDATION
     if(from === 'SIGNUP' || from.toLowerCase() === 'signup'){
+        // initialize refs of input fields of signup
+        const {fullNameField,emailField,passwordField,password2Field} = that
 
         // get Fields from SIGNUP state
         const {fullName, email, password, password2} = that.state
@@ -51,6 +77,13 @@ export const UvalidateFields = (that, from) =>{
               errors: true,
               errorMessage: messages.errorFillFields,
             });
+
+            inputValidationWarning([
+              fullNameField.current,
+              emailField.current,
+              passwordField.current,
+              password2Field.current,
+            ]);
 
             return
 
@@ -77,12 +110,19 @@ export const UvalidateFields = (that, from) =>{
         }
 
         // return success if theres are no errors
+        inputValidationWarning([
+            fullNameField.current,
+            emailField.current,
+            passwordField.current,
+            password2Field.current,
+          ]);
         that.setState({validationSuccess: messages.success})
         return messages.success
     }
 
 }
 
+// api calls
 export const UapiCall = async (that, from, url) => {
 
     let headers = {headers: { "Content-type": "application/json"  }}
@@ -118,3 +158,22 @@ export const UapiCall = async (that, from, url) => {
             }
     }
 }
+
+// redirect to dashboard if user is already logged in
+export const UredirectIfLogin = (from) => {
+    
+    const token = sessionStorage.getItem('token')
+    const redirect = <Redirect to='/dash'></Redirect>
+
+    if(from === 'LOGIN'){
+        if(token)
+        return redirect
+    }
+
+    if(from === 'SIGNUP'){
+        if(token){
+            return redirect
+        }
+    }
+}
+

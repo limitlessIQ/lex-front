@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link,withRouter } from 'react-router-dom'
 import Spinner from 'react-loader-spinner'
-import { UgetFields,UvalidateFields,UapiCall } from '../lib/utils'
+import { UgetFields,UvalidateFields,UapiCall, UredirectIfLogin } from '../lib/utils'
 import { apiEndPoints } from '../lib/apiEndPoints'
 import TopNav from './TopNav'
 import Footer from './Footer'
-
+import { UserAction } from '../store'
 import '../styles/login.css'
 
 export class Login extends Component {
@@ -30,6 +30,8 @@ export class Login extends Component {
 
     componentDidMount = () =>{
         this.checkToAnimate()
+        this.emailField.current.focus()
+        // UredirectIfLogin()
     }
 
     // this method animates the login form when
@@ -64,14 +66,29 @@ export class Login extends Component {
           }
 
           if(response.data.user){
+            let User = {
+              name: response.data.user.name,
+              email: response.data.user.email,
+            }; 
+
+            // clear error states
             this.setState({errors: false, validationSuccess: 'ok'})
 
+            // set token to session storage
+            sessionStorage.setItem('token', response.data.token)
+
+            // set user global state
+            this.props.UserAction(User)
+
+            // redirect to dashboard
+            // wait for 3s before redirect
+            setTimeout(() => {
+                this.props.history.replace('/dash') // continue from here
+            }, 3000);
           }
 
           console.log(response)
         }
-
-
 
     }
 
@@ -87,7 +104,9 @@ export class Login extends Component {
     render() {
         return (
           <>
+          {UredirectIfLogin("LOGIN")}
           <TopNav></TopNav>
+
           <div className="mainContainer loginContainer">
             <div
               id="LoginCenter"
@@ -163,7 +182,7 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = () =>{
     return {
-        
+        UserAction
     }
 }
 

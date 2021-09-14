@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { AnimateLogin } from '../store'
 import { Link } from 'react-router-dom'
 import Spinner from 'react-loader-spinner'
-import { UapiCall, UgetFields, UvalidateFields } from '../lib/utils'
+import { UapiCall, UgetFields, UvalidateFields,UredirectIfLogin } from '../lib/utils'
 import { apiEndPoints } from '../lib/apiEndPoints'
 import TopNav from './TopNav'
 import '../styles/Signup.css'
@@ -27,11 +27,16 @@ export class Signup extends Component {
         }
 
         this.teaserTextElement = React.createRef()
+        this.fullNameField = React.createRef()
+        this.emailField = React.createRef()
+        this.passwordField = React.createRef()
+        this.password2Field = React.createRef()
 
     }
 
     componentDidMount(){
       this.animteTeaser()
+      this.fullNameField.current.focus()
     }
     
     signUp = async (e) => {
@@ -60,8 +65,8 @@ export class Signup extends Component {
 
       setInterval(() => { 
         
-        if(this.teaserTextElement.current !== null)
-          this.teaserTextElement.current.textContent = this.state.teaserTexts[this.state.teaserTextsCounter]
+        // if(this.teaserTextElement.current !== null)
+        //   this.teaserTextElement.current.textContent = this.state.teaserTexts[this.state.teaserTextsCounter]
 
         this.setState({teaserTextsCounter: this.state.teaserTextsCounter + 1})
 
@@ -77,6 +82,7 @@ export class Signup extends Component {
     render() {
         return (
           <>
+          {UredirectIfLogin('SIGNUP')}
           <TopNav></TopNav>
           <div className=" mainContainerCol2">
             <div className="centerContainer4max6 justifyEnd whiteWithOpacity white borderPrimary borderRadius ">
@@ -94,6 +100,7 @@ export class Signup extends Component {
                   type="text"
                   name="fullName"
                   id="fullName"
+                  ref={this.fullNameField}
                 />
 
                 <label className=" primary" htmlFor="email">
@@ -105,6 +112,7 @@ export class Signup extends Component {
                   type="email"
                   name="email"
                   id="email"
+                  ref={this.emailField}
                 />
 
                 <label className=" primary" htmlFor="password">
@@ -116,6 +124,7 @@ export class Signup extends Component {
                   type="password"
                   name="password"
                   id="password"
+                  ref={this.passwordField}
                 />
 
                 <label className=" primary" htmlFor="password2">
@@ -127,6 +136,7 @@ export class Signup extends Component {
                   type="password"
                   name="password2"
                   id="password2"
+                  ref={this.password2Field}
                 />
 
                 <p className="primary small marginBottom danger">
@@ -134,7 +144,7 @@ export class Signup extends Component {
                 </p>
                 <button
                   onClick={this.signUp}
-                  className="secondaryButton medium"
+                  className="secondaryButton medium "
                 >
 
                     { this.state.validationSuccess === 'ok' ?  <Spinner width={100} type='TailSpin' color="white" height='20px'></Spinner> : 'Sign up' }
@@ -153,7 +163,7 @@ export class Signup extends Component {
             </div>
             <div className="teaser justifyStart colorWhite someTex">
               <h1 className="medium3">Access <span className="">free</span>  </h1>
-              <h1 ref={this.teaserTextElement} className="large slid ts">{this.state.teaserTexts[this.state.teaserTextsCounter]}</h1>
+               <h1 ref={this.teaserTextElement} className="large slid ts"> {this.state.teaserTexts[this.state.teaserTextsCounter] ? this.state.teaserTexts[this.state.teaserTextsCounter]: null } </h1>
               <h1 className="medium3">for <span className="">30</span> days </h1>
             </div>
           </div>

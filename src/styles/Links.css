@@ -1,0 +1,20 @@
+.leftSideBarLink:hover {
+    background-color: rgb(240, 240, 240);
+    color: rgb(39, 39, 39);
+    transition: all 0.2s ease;
+}
+
+.leftSideBarLink:hover span{
+    transform: translateX(10px);
+    transition: all ease-in 0.3s;
+}
+
+.leftSideBarLink:hover i{
+    transform: scale(1.2) translateX(5px);
+    transition: all ease-in 0.5s;
+
+}
+
+i{
+    justify-self: center;
+}

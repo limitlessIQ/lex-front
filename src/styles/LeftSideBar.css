@@ -1,0 +1,6 @@
+.leftSideBarContainer{
+    /* border: 1px solid red; */
+    display: grid;
+    grid-template-rows: auto 1fr 100px;
+    grid-row-gap: 50px;
+}

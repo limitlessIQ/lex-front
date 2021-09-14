@@ -1,0 +1,20 @@
+.settingsLink:hover  i{
+    transform: rotate(88deg) translateX(2px) scale(1.2) ;
+    transition: all .3s ease-in;
+    
+}
+
+.settingsLink:hover {
+    color: rgb(39, 39, 39);
+    
+}
+
+.logoutLink:hover {
+    color: rgb(39, 39, 39);
+    
+}
+
+.settingsLink:hover span{
+    transform: translateX(2px);
+    transition: all .1s ease-in;
+}

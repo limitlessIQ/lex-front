@@ -1,0 +1,28 @@
+.card{
+    /* width: 250px; */
+    height: 230px;
+    border: 1px solid rgb(121, 0, 111);
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr);
+    padding: 30px 20px;
+    border-radius: 25px;
+    background: rgb(39, 39, 39);
+}
+
+.totalBalanceContainer{
+    grid-row: 2/3;
+    grid-column: 1/2;
+    color: white;
+    align-self: end;
+}
+
+.cardNumberContainer{
+    grid-column: 2/3;
+    align-self: start;
+    justify-self: end;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 17px 18px;
+    color: black;
+    border-radius: 5px;
+}
